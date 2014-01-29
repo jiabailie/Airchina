@@ -325,158 +325,158 @@ common::averagePixels(long bmpSize, byte *data)
 void
 common::imageSegment2Four(int width, int height, byte *data)
 {
-	vector<int> rows;
-	int i = 0, j = 0, ct = 0;	
-	int s_horizon[CHAR_PROCESS_NUM];
-	int e_horizon[CHAR_PROCESS_NUM];
+    vector<int> rows;
+    int i = 0, j = 0, ct = 0;    
+    int s_horizon[CHAR_PROCESS_NUM];
+    int e_horizon[CHAR_PROCESS_NUM];
 
-	vector<point> sample_rec_left_top;
-	vector<point> sample_rec_right_bottom;
+    vector<point> sample_rec_left_top;
+    vector<point> sample_rec_right_bottom;
 
-	byte *cdata = (byte*)malloc(sizeof(byte) * width * height);
-	singlizeImage(width, height, cdata, data);
+    byte *cdata = (byte*)malloc(sizeof(byte) * width * height);
+    singlizeImage(width, height, cdata, data);
 
-	// Find the pure black vertical lines' positions.
-	for(i = 0; i < width; ++i)
-	{
-		for(j = 0; j < height && cdata[j * width + i] == c_BLACK; ++j);
+    // Find the pure black vertical lines' positions.
+    for(i = 0; i < width; ++i)
+    {
+        for(j = 0; j < height && cdata[j * width + i] == c_BLACK; ++j);
 
-		if(j == height) { rows.push_back(i); }
-	}
+        if(j == height) { rows.push_back(i); }
+    }
 
-	if(rows[rows.size() - 1] != width - 1)
-	{
-		rows.push_back(width - 1);
-	}
+    if(rows[rows.size() - 1] != width - 1)
+    {
+        rows.push_back(width - 1);
+    }
 
-	for(i = 1; i < int(rows.size()); ++i)
-	{
-		if(rows[i] - rows[i - 1] >= MIN_WIDTH)
-		{
-			s_horizon[ct] = rows[i - 1];
-			e_horizon[ct] = rows[i];
+    for(i = 1; i < int(rows.size()); ++i)
+    {
+        if(rows[i] - rows[i - 1] >= MIN_WIDTH)
+        {
+            s_horizon[ct] = rows[i - 1];
+            e_horizon[ct] = rows[i];
 
-			imageSubSegment(width, height, rows[i - 1], rows[i], cdata, sample_rec_left_top, sample_rec_right_bottom);
-			++ct;
-		}
-	}
+            imageSubSegment(width, height, rows[i - 1], rows[i], cdata, sample_rec_left_top, sample_rec_right_bottom);
+            ++ct;
+        }
+    }
 
-	for(i = 0; i < CHAR_PROCESS_NUM; ++i)
-	{
-		saveImagePartBy2Points(sample_rec_left_top[i].h, sample_rec_left_top[i].w, sample_rec_right_bottom[i].h, sample_rec_right_bottom[i].w, width, cdata);
-	}
+    for(i = 0; i < CHAR_PROCESS_NUM; ++i)
+    {
+        saveImagePartBy2Points(sample_rec_left_top[i].h, sample_rec_left_top[i].w, sample_rec_right_bottom[i].h, sample_rec_right_bottom[i].w, width, cdata);
+    }
 
-	free(cdata);
-	cdata = 0;
+    free(cdata);
+    cdata = 0;
 }
 
 void
 common::imageSubSegment(int width, int height, int horizontal_start, int horizontal_end, byte *data, vector<point>& sample_rec_left_top, vector<point>& sample_rec_right_bottom)
 {
-	int i = 0, j = 0;
-	int lt_height = 0;
-	int lt_width = horizontal_start;
-	int rb_height = height - 1;
-	int rb_width = horizontal_end;
+    int i = 0, j = 0;
+    int lt_height = 0;
+    int lt_width = horizontal_start;
+    int rb_height = height - 1;
+    int rb_width = horizontal_end;
 
-	for(i = 0; i < height; ++i)
-	{
-		for(j = horizontal_start; j <= horizontal_end && data[i * width + j] == c_BLACK; ++j);
-		if(j <= horizontal_end)
-		{
-			lt_height = i;
-			break;
-		}
-	}
+    for(i = 0; i < height; ++i)
+    {
+        for(j = horizontal_start; j <= horizontal_end && data[i * width + j] == c_BLACK; ++j);
+        if(j <= horizontal_end)
+        {
+            lt_height = i;
+            break;
+        }
+    }
 
-	for(i = height - 1; i >= 0; --i)
-	{
-		for(j = horizontal_start; j <= horizontal_end && data[i * width + j] == c_BLACK; ++j);
-		if(j <= horizontal_end)
-		{
-			rb_height = i;
-			break;
-		}
-	}
+    for(i = height - 1; i >= 0; --i)
+    {
+        for(j = horizontal_start; j <= horizontal_end && data[i * width + j] == c_BLACK; ++j);
+        if(j <= horizontal_end)
+        {
+            rb_height = i;
+            break;
+        }
+    }
 
-	sample_rec_left_top.push_back(point(lt_height, lt_width));
-	sample_rec_right_bottom.push_back(point(rb_height, rb_width));
+    sample_rec_left_top.push_back(point(lt_height, lt_width));
+    sample_rec_right_bottom.push_back(point(rb_height, rb_width));
 }
 
 // Note: if the real width cannot be divided by 4, the width has to be increased to a number which can be divided by 4.
 void
 common::saveImagePartBy2Points(int rec_left_height, int rec_left_width, int rec_right_height, int rec_right_width, int width, byte *data)
 {
-	int i = 0, j = 0;
-	int rem = 0, cur = 0, tmp = 0;
-	clock_t timer = clock();
-	char savePath[PathLength];
+    int i = 0, j = 0;
+    int rem = 0, cur = 0, tmp = 0;
+    clock_t timer = clock();
+    char savePath[PathLength];
 
-	vector<long> v_times;
+    vector<long> v_times;
 
-	int s_width = rec_right_width - rec_left_width + 1;
-	int s_height = rec_right_height - rec_left_height + 1;
+    int s_width = rec_right_width - rec_left_width + 1;
+    int s_height = rec_right_height - rec_left_height + 1;
 
-	while((s_width + rem) % 4 != 0) { ++rem; }
+    while((s_width + rem) % 4 != 0) { ++rem; }
 
-	byte *image_part = (byte*)malloc(sizeof(byte) * (s_width + rem) * s_height * 3);
+    byte *image_part = (byte*)malloc(sizeof(byte) * (s_width + rem) * s_height * 3);
 
-	memcpy(savePath, TEMPLATE_OUTPUT_PATH, sizeof(savePath));
+    memcpy(savePath, TEMPLATE_OUTPUT_PATH, sizeof(savePath));
 
-	v_times.push_back(long(timer));
+    v_times.push_back(long(timer));
 
-	spellSaveFilePath2(BMPTYPE, v_times, savePath);
+    spellSaveFilePath2(BMPTYPE, v_times, savePath);
 
-	for(i = 0; i < s_height; ++i)
-	{
-		for(j = 0; j < s_width; ++j)
-		{
-			cur = index(i, j, (s_width + rem));
-			tmp = (rec_left_height + i) * width + (rec_left_width + j);
-			image_part[cur] = image_part[cur + 1] = image_part[cur + 2] = data[tmp];
-			cur += 3;
-		}
-		for(j = 0; j < rem; ++j)
-		{
-			image_part[cur] = image_part[cur + 1] = image_part[cur + 2] = c_BLACK;
-			cur += 3;
-		}
-	}
+    for(i = 0; i < s_height; ++i)
+    {
+        for(j = 0; j < s_width; ++j)
+        {
+            cur = index(i, j, (s_width + rem));
+            tmp = (rec_left_height + i) * width + (rec_left_width + j);
+            image_part[cur] = image_part[cur + 1] = image_part[cur + 2] = data[tmp];
+            cur += 3;
+        }
+        for(j = 0; j < rem; ++j)
+        {
+            image_part[cur] = image_part[cur + 1] = image_part[cur + 2] = c_BLACK;
+            cur += 3;
+        }
+    }
 
-	graphics cg;
-	cg.save(savePath, s_width + rem, s_height, image_part);
+    graphics cg;
+    cg.save(savePath, s_width + rem, s_height, image_part);
 
-	free(image_part);
-	image_part = 0;
+    free(image_part);
+    image_part = 0;
 }
 
 void
 common::fillImageWhite(int width, int height, byte *data, vector<point>& sample_rec_left_top, vector<point>& sample_rec_right_bottom)
 {
-	bool flg = true;
-	int i = 0, j = 0, k = 0, tmp = 0;
+    bool flg = true;
+    int i = 0, j = 0, k = 0, tmp = 0;
 
-	for(i = 0; i < height; ++i)
-	{
-		for(j = 0; j < width; ++j)
-		{
-			flg = true;
-			for(k = 0; k < int(sample_rec_left_top.size()) && flg; ++k)
-			{
-				if(i >= sample_rec_left_top[k].h && 
-				   i <= sample_rec_right_bottom[k].h && 
-				   j >= sample_rec_left_top[k].w && 
-				   j <= sample_rec_right_bottom[k].w)
-				{
-					flg = false;
-				}
-			}
+    for(i = 0; i < height; ++i)
+    {
+        for(j = 0; j < width; ++j)
+        {
+            flg = true;
+            for(k = 0; k < int(sample_rec_left_top.size()) && flg; ++k)
+            {
+                if(i >= sample_rec_left_top[k].h && 
+                   i <= sample_rec_right_bottom[k].h && 
+                   j >= sample_rec_left_top[k].w && 
+                   j <= sample_rec_right_bottom[k].w)
+                {
+                    flg = false;
+                }
+            }
 
-			if(flg)
-			{
-				tmp = index(i, j, width);
-				data[tmp] = data[tmp + 1] = data[tmp = 2] = c_WHITE;
-			}
-		}
-	}
+            if(flg)
+            {
+                tmp = index(i, j, width);
+                data[tmp] = data[tmp + 1] = data[tmp = 2] = c_WHITE;
+            }
+        }
+    }
 }

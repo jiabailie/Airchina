@@ -2,7 +2,7 @@
 #define EXECUTE_DEBUG 0
 
 #if EXECUTE_DEBUG == 0
-	#define NORMAL_MODE
+    #define NORMAL_MODE
 #elif EXECUTE_DEBUG == 1
-	#define DEBUG_MODE
+    #define DEBUG_MODE
 #endif

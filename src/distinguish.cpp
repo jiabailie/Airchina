@@ -10,7 +10,7 @@ common gd_common;
 
 distinguish::distinguish(int width, int height, byte *&data, byte ret[CHAR_PROCESS_NUM], const char *filePath)
 {
-	
+    
 }
 
 int readTemplates(const char*);

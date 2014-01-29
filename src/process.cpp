@@ -11,7 +11,7 @@
 #define DEBUG_OUTPUT
 
 #ifdef  NORMAL_MODE
-	#undef DEBUG_OUTPUT
+    #undef DEBUG_OUTPUT
 #endif
 
 using namespace std;
@@ -52,8 +52,8 @@ process::removePixels(int& width, int& height, const char *filePath, byte*& data
     free(image);
     free(info);
 
-	image = 0;
-	info = 0;
+    image = 0;
+    info = 0;
 }
 
 void

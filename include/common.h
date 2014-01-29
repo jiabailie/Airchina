@@ -49,14 +49,14 @@ struct common
     // Spell the sample path.
     void spellSampleFilePath(int, char[]);
 
-	// data[i] = data[i + 1] = data[i + 2] = (data[i] + data[i + 1] + data[i + 2]) / 3
-	void averagePixels(long, byte*);
+    // data[i] = data[i + 1] = data[i + 2] = (data[i] + data[i + 1] + data[i + 2]) / 3
+    void averagePixels(long, byte*);
 
-	void imageSegment2Four(int, int, byte*);
+    void imageSegment2Four(int, int, byte*);
 
-	void imageSubSegment(int, int, int, int, byte*, std::vector<point>&, std::vector<point>&);
+    void imageSubSegment(int, int, int, int, byte*, std::vector<point>&, std::vector<point>&);
 
-	void saveImagePartBy2Points(int, int, int, int, int, byte*);
+    void saveImagePartBy2Points(int, int, int, int, int, byte*);
 
-	void fillImageWhite(int, int, byte*, std::vector<point>&, std::vector<point>&);
+    void fillImageWhite(int, int, byte*, std::vector<point>&, std::vector<point>&);
 };

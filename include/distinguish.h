@@ -13,25 +13,25 @@
 struct distinguish
 {
 private:
-	vector<point> left_top;
-	vector<point> right_bottom;
-	vector<templates> char_templates;
+    vector<point> left_top;
+    vector<point> right_bottom;
+    vector<templates> char_templates;
 public:
-	distinguish(int, int, byte*&, byte[], const char*);
+    distinguish(int, int, byte*&, byte[], const char*);
 
-	int readTemplates(const char*);
-	void readTemplateData(byte, const char*);
-	void clearOneLine(int, int, int, int, int, byte*);
-	void removeRedundantPixels(int, int, byte*);
-	void removeBlackPixels(int, int, int, int, int, byte*);
+    int readTemplates(const char*);
+    void readTemplateData(byte, const char*);
+    void clearOneLine(int, int, int, int, int, byte*);
+    void removeRedundantPixels(int, int, byte*);
+    void removeBlackPixels(int, int, int, int, int, byte*);
 
-	ll calMpq(int, int, int, int, byte*);
-	double calCenterMoment(int, int, int, int, byte*);
-	void calRegularMoment(int, int, byte*, double[]);
-	double calMomentSimilar(double[], double[]);
-	double calMomentSimilarByCos(double[], double[]);
+    ll calMpq(int, int, int, int, byte*);
+    double calCenterMoment(int, int, int, int, byte*);
+    void calRegularMoment(int, int, byte*, double[]);
+    double calMomentSimilar(double[], double[]);
+    double calMomentSimilarByCos(double[], double[]);
 
-	byte distinguishOneCharacter(int, int, byte*, const char*);
-	
-	byte distinguishOneCharacterByCos(int, int, byte*, const char*);
+    byte distinguishOneCharacter(int, int, byte*, const char*);
+    
+    byte distinguishOneCharacterByCos(int, int, byte*, const char*);
 }
