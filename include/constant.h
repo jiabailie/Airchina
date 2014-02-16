@@ -82,8 +82,12 @@ const int Threshold = 127;
 // Represents from 2^0 to 2^10.
 const int MASK[NumLength + 1] = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024};
 
-// The directory where save the segmented templates.
-const char TEMPLATE_OUTPUT_PATH[PathLength] = "E:/Airchina/bmp/template/t";
+// About this constant, no more to say.
+const double PI = 3.1415926;
+
+const int LineLength = 1000;
+
+const double PROPER_DISTANCE = 5000;
 
 const int grow_direction[4][4] = 
 {

@@ -34,7 +34,8 @@ struct common
     void singlizeImage(int, int, byte*, byte*);
 
     // Calculate a^b.
-    ll calPow(ll, ll);
+    double calPow(double, ll);
+	ll calPow(ll, ll);
 
     // During the process of reading parameters into memory,
     // this function is used to transform char array to double.
@@ -49,14 +50,16 @@ struct common
     // Spell the sample path.
     void spellSampleFilePath(int, char[]);
 
-    // data[i] = data[i + 1] = data[i + 2] = (data[i] + data[i + 1] + data[i + 2]) / 3
-    void averagePixels(long, byte*);
+	// data[i] = data[i + 1] = data[i + 2] = (data[i] + data[i + 1] + data[i + 2]) / 3
+	void averagePixels(long, byte*);
 
-    void imageSegment2Four(int, int, byte*);
+	void imageSegment2Four(int, int, byte*);
 
-    void imageSubSegment(int, int, int, int, byte*, std::vector<point>&, std::vector<point>&);
+	void imageSegment(int, int, byte*, std::vector<point>&, std::vector<point>&);
 
-    void saveImagePartBy2Points(int, int, int, int, int, byte*);
+	void imageSubSegment(int, int, int, int, byte*, std::vector<point>&, std::vector<point>&);
 
-    void fillImageWhite(int, int, byte*, std::vector<point>&, std::vector<point>&);
+	void saveImagePartBy2Points(int, int, int, int, int, byte*);
+
+	void fillImageWhite(int, int, byte*, std::vector<point>&, std::vector<point>&);
 };

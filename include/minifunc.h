@@ -27,3 +27,10 @@ inline T index(T x, T y, T width)
 {
     return (x * width + y) * 3;
 }
+
+// To determine whether x is equal to 0.
+inline int iszero(double x)
+{
+	if(x - 0 < 1e-9) { return 1; }
+	return 0;
+}
