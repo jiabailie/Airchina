@@ -69,30 +69,30 @@ void test_removePixels()
 
 void test_imageSegment2Four()
 {
-	byte *data = 0;
-	byte *rdata = 0;
+    byte *data = 0;
+    byte *rdata = 0;
 
-	int w = 0, h = 0;
+    int w = 0, h = 0;
     char path[400] = "E:/Airchina/bmp/samples/1.bmp";
 
     gp.removePixels(w, h, path, data);
 
-	rdata = (byte*)malloc(sizeof(byte) * w * h * 3);
+    rdata = (byte*)malloc(sizeof(byte) * w * h * 3);
     gp.recoverImage(w, h, data, rdata);
-	gg.save("E:/Airchina/bmp/data/12_test_imageSegment2Four.bmp", w, h, rdata);
+    gg.save("E:/Airchina/bmp/data/12_test_imageSegment2Four.bmp", w, h, rdata);
 
-	gc.imageSegment2Four(w, h, rdata);
+    gc.imageSegment2Four(w, h, rdata);
 
     free(data);
-	free(rdata);
+    free(rdata);
 
     data = 0;
-	rdata = 0;
+    rdata = 0;
 }
 
 int main()
 {
-	test_imageSegment2Four();
+    test_imageSegment2Four();
 
     return 0;
 }
